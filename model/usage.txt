@@ -1,0 +1,3 @@
+run the runModelMQTT.py for connecting to the MQTT broker and sending the data to the robot
+run the predictOutputs.py for predicting the outputs of the model
+run the detectionMQTT.py for detecting the objects and test the model
