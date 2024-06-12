@@ -1,5 +1,6 @@
 import paho.mqtt.client as mqtt
 from ultralytics import YOLO
+import json
 
 # Initialize the YOLO model
 model = YOLO('yolov8n-seg.pt')
@@ -68,13 +69,20 @@ def get_person_position(frame_shape, person_box):
         horizontal_position = "Center"
     
     #now determinate wheter the person is close or far
-    if int(box_size) > 100000:
+    print('box size:',box_size)
+    if int(box_size) > 200000:
         distance = "Close"
+    elif int(box_size) < 200000 and int(box_size) > 100000:
+        distance = "Neutral"
     else:
         distance = "Far"
 
     # Concatenate vertical and horizontal positions
-    position = f"{horizontal_position, distance}"
+    
+    position = {
+        "horizontal_position": horizontal_position, 
+        "distance": distance,
+    }
 
     return position
 
@@ -90,8 +98,9 @@ for result in results:
             frame_shape = (640, 550)  # Example frame dimensions
             person_box = detection_boxes.xyxy[0]  # Example bounding box coordinates
             positions = get_person_position(frame_shape, person_box)
+            positions = str(positions)
             print("Person positions:", positions)
-            client.publish(topic, positions)
+            client.publish(topic, positions, qos=0)
 
 
 client.disconnect()
