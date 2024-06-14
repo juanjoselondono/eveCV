@@ -4,6 +4,10 @@ Robot capable of performing object detection using a Raspberry Pi Zero 2W and a 
 
 ![<alt_text>](<portrait.png>)
 
+### Network
+
+![<alt_text>](<network.png>)
+
 ### Usage
 This project consist in two folders. /robot for the robot code and /model for the ultralitics model. 
 
